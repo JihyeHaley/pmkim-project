@@ -14,7 +14,7 @@ import="vo.GoodsVO, vo.CartVO, vo.EventVO, vo.MemberVO,vo.GoodsEventShopMemberVO
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	
     <!-- Site Metas -->
-    <title>편마, 김편복 - event</title>
+    <title>편마, 김편복 - 행사</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -54,6 +54,7 @@ import="vo.GoodsVO, vo.CartVO, vo.EventVO, vo.MemberVO,vo.GoodsEventShopMemberVO
 		   List<GoodsCategoryEventShopMemberVO> gesList = (ArrayList<GoodsCategoryEventShopMemberVO>) request.getAttribute("gesList");
 		   
 %>
+<c:set var="sessionMemberId" value="${ sessionScope.id }"/>
     <!-- Start Main Top -->
     <header class="main-header">
         <!-- Start Navigation -->
@@ -73,10 +74,24 @@ import="vo.GoodsVO, vo.CartVO, vo.EventVO, vo.MemberVO,vo.GoodsEventShopMemberVO
                     <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
                         <li class="nav-item active"><a class="nav-link" href="/pmkim/home">Home</a></li> <!-- href는 jsp/html 형식이 아닌, {/매핑명}으로  해주시면돼용! 나중에 고쳐주세요~ -->
                         <li class="nav-item active"><a class="nav-link" href="/pmkim/map">지도</a></li> <!--성진오빠파트-->
-                        <li class="nav-item active"><a class="nav-link" href="/pmkim/theme">테마</a></li> <!-- 세호-->
+                        <li class="nav-item active"><a class="nav-link" href="/pmkim/analysis">SNS 분석</a></li> <!-- 세호-->
                         <li class="nav-item active"><a class="nav-link" href="/pmkim/event">행사</a></li> <!-- 지혜파트-->
                         <li class="nav-item active"><a class="nav-link" href="/pmkim/cart">만원의 행복</a></li> <!-- 규영언니파트♡ -->
-                   		<li class="nav-item active"><a class="nav-link" href="/pmkim/news">편의점 뉴스</a></li> <!-- 규영언니파트♡ -->
+                        <li class="nav-item active"><a class="nav-link" href="/pmkim/news">편의점 뉴스</a></li> <!-- 규영언니파트♡ -->
+                        <!-- <li class="nav-item active"><a class="nav-link" data-toggle="modal" data-target="#loginModal" href="/pmkim/#">로그인</a></li>	                        
+						<li class="nav-item active"><a class="nav-link" href="/pmkim/signup">회원가입</a></li> -->
+						<!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+						<c:choose>
+							<c:when test="${msg eq 'success' || !empty sessionMemberId}">
+								<li class="nav-item active"><a class="nav-link" id="userView" href="/pmkim/ownerpage"><img src="/pmkim/resources/images/star.png" style="width:13px;">${sessionMemberId}님</a></li>
+								<li class="nav-item active"><a class="nav-link" id="logout" href="/pmkim/logout"><b>Logout</b></a></li>
+								
+							</c:when>
+							<c:when test="${msg eq 'fail' || msg eq 'logout' || msg eq '' || msg eq null}">
+								<li class="nav-item active"><a class="nav-link" id="login" data-toggle="modal" data-target="#loginModal" href="/pmkim/#">로그인</a></li>
+								<li class="nav-item active"><a class="nav-link" id="signup" href="/pmkim/signup">회원가입</a></li>	
+						    </c:when>
+						</c:choose>
                     </ul>
                 </div>
             </div>
@@ -84,17 +99,72 @@ import="vo.GoodsVO, vo.CartVO, vo.EventVO, vo.MemberVO,vo.GoodsEventShopMemberVO
         <!-- End Navigation -->
     </header>
     <!-- End Main Top -->
-	<!-- Start All Title Box -->
-		<div class="all-title-box">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-12">
-						<h2>행사상품</h2>
-					</div>
+
+	<!-- Start login popup -->
+    <div class="container">
+		<!-- <button type="button" class="btn btn-info btn-round" data-toggle="modal" data-target="#loginModal">
+		    Login
+		</button>   -->
+		<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			
+		  <div class="modal-dialog modal-dialog-centered" role="document" >
+		    <div class="modal-content" >
+		      <div class="modal-header border-bottom-0">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body border-bottom-0">
+		      	<div class="form-title text-center"><!--  style="margin-left:auto; margin-right:auto;" -->
+					<img src="/pmkim/resources/images/pmkim_Logo_1.jpg" /> 	
 				</div>
-			</div>
+				<br>
+				
+		        <div class="form-title text-center">
+		          <h4><b>Login</b></h4>
+		        </div>
+		        <div class="d-flex flex-column text-center">
+		        
+		          <form method="post" action="/pmkim/login" id="frmSignin">
+		            <div class="form-group">
+		              <input type="text" class="form-control" name="id" placeholder="Your id...">
+		            </div>
+		            <div class="form-group">
+		              <input type="password" class="form-control" name="pw" placeholder="Your password...">
+		            </div>
+		            <button type="submit" class="btn btn-info btn-block btn-round" id="btnLogin" style="background-color:#0F694D">Login</button> <!-- '/weet/signinCheck.do' -->
+		          </form>
+		          
+		          <!-- <div class="text-center text-muted delimiter">or use a social network</div> -->
+		          <div class="d-flex justify-content-center social-buttons">
+		            <!-- <button type="button" id="btnGoogleSignin" class="btn btn-secondary btn-round" data-toggle="tooltip" data-placement="top" title="Google"
+		           		onclick="
+		           			gauth.signIn().then(function(){
+								console.log('gauth.signIn()');
+								checkLoginStatus();
+								location.reload(true);
+							});
+						" data-dismiss="modal">
+		          		<img src="/pmkim/resources/images/btn_google_light_normal_ios.svg">
+		          	</button> -->
+		          </div>
+		        </div>
+		      </div>
+		      <div class="modal-footer d-flex justify-content-center ">
+			        <div class="signup-section text-center">Not a member yet? 
+			        	<a href="/pmkim/signup">Sign Up</a>.
+			        </div>
+			        <button type="button" class="btn btn-default text-center" data-dismiss="modal">Close</button>
+			        <!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#signupModal">Open Modal</button> -->
+		      </div>
+		    </div>
+		      
+		  </div>
 		</div>
-	<!-- End All Title Box -->
+		
+	</div>
+		<!-- End login popup -->
+    
 	
 	<!-- Start Gallery  -->
     <div class="products-box2">
@@ -267,8 +337,8 @@ import="vo.GoodsVO, vo.CartVO, vo.EventVO, vo.MemberVO,vo.GoodsEventShopMemberVO
 
     <!-- End Gallery  -->
 
-    <!-- 20200521_oliver.yoo -->
-	<!-- Start Footer  -->
+    
+<!-- Start Footer  -->
 	<footer>
 		<div class="footer-main">
 			<div class="container3">
@@ -292,38 +362,35 @@ import="vo.GoodsVO, vo.CartVO, vo.EventVO, vo.MemberVO,vo.GoodsEventShopMemberVO
 					<div class="row">
 						<!-- Footer 1-->
 						<div class="col-lg-422 mb-5 mb-lg-0">
-							<a><img src="/pmkim/resources/images/haley.png" class="profile"  alt="" /></a><br>
-							<a href="https://github.com/JihyeHaley" class="result-text"><img src="/pmkim/resources/images/gitprof.png" class="git_img"/>Haley Oh</a><br>
-							<a class="result-text">You know? I'm 팀장4;)</a><br>
+							<a><img src="/pmkim/resources/images/haley.png" class="profile"  alt="" /></a><br><br>
+							<a href="https://github.com/JihyeHaley" class="result-text">Haley Oh</a><br><br>
+							<a class="result-text">You know? I'm 팀장4;)</a><br><br>
 						<a class= "profile-text">has kinda professional language skills English, Chinese, Japanese. Currently working and studying for full-stack developing skills</a>
 						
 						</div>
 
 						<!-- Footer 2-->
 						<div class="col-lg-422 mb-5 mb-lg-0">
-							<a><img src="/pmkim/resources/images/seho.png" class="profile"   alt="" /></a><br>
-							<a href="https://github.com/sehooh5"><img src="/pmkim/resources/images/gitprof.png" class="git_img"/></a>
-							<a class="result-text">Seho Oh </a><br>
-							<a class="result-text">You know? I'm 팀장1;)</a><br>
+							<a><img src="/pmkim/resources/images/seho.png" class="profile"   alt="" /></a><br><br>
+							<a href="https://github.com/sehooh5" class="result-text">Seho Oh </a><br><br>
+							<a class="result-text">You know? I'm 팀장1;)</a><br><br>
 							<a class= "profile-text">is one of the treasurous in gomgam since he has professional analysis skills based on R selenium. His main major was Design. Amazing!</a>
 						
 						</div>
 
 						<!-- Footer 3-->
 						<div class="col-lg-422 mb-5 mb-lg-0">
-							<a><img src="/pmkim/resources/images/linda.png" class="profile" alt="" /></a><br>
-							<a href="https://github.com/GyuyoungEom"><img src="/pmkim/resources/images/gitprof.png" class="git_img"/></a>
-							<a class="result-text">Linda Eom </a><br>
-							<a class="result-text">You know? I'm 팀장3;)</a><br>
+							<a><img src="/pmkim/resources/images/linda.png" class="profile" alt="" /></a><br><br>
+							<a href="https://github.com/GyuyoungEom" class="result-text">Linda Eom </a><br><br>
+							<a  class="result-text">You know? I'm 팀장3;)</a><br><br>
 							<a class= "profile-text">without her, this work could not be achieved... haha He is superwomen among us. Her diction is based on Austrailia, and she is familiar at super power on everything..!!!! </a>
 						</div>
 
 						<!-- Footer 4-->
 						<div class="col-lg-422 mb-5 mb-lg-0">
-							<a><img src="/pmkim/resources/images/oliver.png" class="profile"  /></a><br>
-							<a href="https://github.com/SeongjinOliver"><img src="/pmkim/resources/images/gitprof.png" class="git_img"/></a>
-							<a class="result-text">Oliver Yoo </a><br>
-							<a class="result-text">You know? I'm 팀장1;)</a><br>
+							<a><img src="/pmkim/resources/images/oliver.png" class="profile"  /></a><br><br>
+							<a href="https://github.com/SeongjinOliver" class="result-text">Oliver Yoo </a><br><br>
+							<a class="result-text">You know? I'm 팀장1;)</a><br><br>
 							<a class= "profile-text">is amazing man because he is familiar with back-frond end, DB, Spring, and Java, C... Cannot count all LOL. Surprise thing is he is even studying himself at every night despite project season :)</a>
 							
 							
@@ -334,29 +401,28 @@ import="vo.GoodsVO, vo.CartVO, vo.EventVO, vo.MemberVO,vo.GoodsEventShopMemberVO
 
 				<div class="row">
 					<div class="col-lg-4 col-md-12 col-sm-12">
-						<div class="footer-widget">
+						<div class="footer-widget" ">
 							<h4>About 편마 김편복</h4>
-							<p>편의점 마스터! 김편복
+							<p class="result-text">편의점 마스터! 김편복
 								데이터, 위치기반을 활용한 편의점 상품 추천 서비스</p>
-							<p>편의점에서 점심을 간단히 먹고 싶은 김편복씨는 자신의 위치에서 먹고자하는
+							<p class="result-text">편의점에서 점심을 간단히 먹고 싶은 김편복씨는 자신의 위치에서 먹고자하는
 								상품 어느 편의점에서 행사를 하는지 알고 싶은데 알 수 있는 방법이 없다!!
 								이럴때 필요한 서비스는 "<b>편마 김편복</b>"</p>
 						</div>
 					</div>
 					<div class="col-lg-4 col-md-12 col-sm-12">
-						<div class="footer-link">
+						<div class="footer-link result-text">
 							<h4>Information</h4>
-							<ul class="result-text">
-								<li><a href="#/pmkim/home" >HOME</a></li>
-								<li><a href="#/pmkim/map">지도</a></li>
-								<li><a href="#/pmkim/theme">테마</a></li>
-								<li><a href="#/pmkim/event">행사</a></li>
-								<li><a href="#/pmkim/cart">장바구니</a></li>
-							</ul>
+								<a href="#/pmkim/home" >  HOME</a><br>
+								<a href="#/pmkim/map">  지도</a><br>
+								<a href="#/pmkim/analysis">  SNS 분석</a><br>
+								<a href="#/pmkim/event">  행사</a><br>
+								<a href="#/pmkim/cart">  만원의 행복</a><br>
+								<a href="#/pmkim/cart">  편의점 뉴스</a>
 						</div>
 					</div>
 					<div class="col-lg-4 col-md-12 col-sm-12">
-						<div class="footer-link-contact">
+						<div class="footer-link-contact result-text">
 							<h4>Contact Us</h4>
 							<ul>
 								<li>

@@ -509,17 +509,7 @@ body {
      background-color: #222 !important;
      color: #6f6f6f;
 }
- nav.navbar.bootsnav ul.nav > li > a{
-     position: relative;
-     font-weight: 700;
-     font-size: 16px;
-     color: #000000;
-	 text-transform: uppercase;
-     padding-top: 10px;
-     padding-bottom: 10px;
-     padding-left: 10px;
-     padding-right: 30px;
-}
+
  nav.navbar.bootsnav ul.nav li.active > a{
      color: #0F694D;
 }
@@ -2017,7 +2007,7 @@ body {
 }
  .new-account-login h5 {
      font-size: 18px;
-     color: #111111;
+     color: #1111111;
      font-weight: 600;
 }
  .new-account-login h5 a:hover{
@@ -2422,6 +2412,15 @@ body {
 	color: #ffffff;
 	font-size: 18px;
 	font-weight: 700;
+	padding: 12px 25px;
+	border: none;
+}
+: 18px;
+	font-weight: 700;
+	padding: 12px 25px;
+	border: none;
+}
+ght: 700;
 	padding: 12px 25px;
 	border: none;
 }

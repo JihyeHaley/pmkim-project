@@ -33,7 +33,9 @@
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="/pmkim/resources/css/bootstrap.min.css">
 <!-- Site CSS -->
+<link rel="stylesheet" href="/pmkim/resources/css/jquery-ui.css">
 <link rel="stylesheet" href="/pmkim/resources/css/style_cart.css">
+<link rel="stylesheet" href="/pmkim/resources/css/style_slider.css">
 <link rel="stylesheet" href="/pmkim/resources/css/style_nav.css">
 <!-- Responsive CSS -->
 <link rel="stylesheet" href="/pmkim/resources/css/responsive.css">
@@ -53,50 +55,121 @@
 		List<GoodsEventShopMemberVO> gesList = (ArrayList<GoodsEventShopMemberVO>) request.getAttribute("gesList");
 	%>
 	<!-- Start Main Top -->
-	<header class="main-header">
-		<!-- Start Navigation -->
-		<nav
-			class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
-			<div class="container">
-				<!-- Start Header Navigation -->
-				<div class="navbar-header">
-					<button class="navbar-toggler" type="button" data-toggle="collapse"
-						data-target="#navbar-menu" aria-controls="navbars-rs-food"
-						aria-expanded="false" aria-label="Toggle navigation">
-						<i class="fa fa-bars"></i>
-					</button>
-					<a class="navbar-brand" href="/pmkim/home"><img
-						src="/pmkim/resources/images/pmkim_Logo_1.jpg" class="logo" alt=""></a>
-				</div>
-				<!-- End Header Navigation -->
+	<c:set var="sessionMemberId" value="${ sessionScope.id }"/>
+    <!-- Start Main Top -->
+    <header class="main-header">
+        <!-- Start Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
+            <div class="container">
+                <!-- Start Header Navigation -->
+                <div class="navbar-header">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fa fa-bars"></i>
+                </button>
+                    <a class="navbar-brand" href="/pmkim/home"><img src="/pmkim/resources/images/pmkim_Logo_1.jpg" class="logo" alt=""></a>
+                </div>
+                <!-- End Header Navigation -->
 
-				<!-- Collect the nav links, forms, and other content for toggling -->
-				<div class="collapse navbar-collapse" id="navbar-menu">
-					<ul class="nav navbar-nav ml-auto" data-in="fadeInDown"
-						data-out="fadeOutUp">
-						<li class="nav-item active"><a class="nav-link"
-							href="/pmkim/home">Home</a></li>
-						<!-- href는 jsp/html 형식이 아닌, {/매핑명}으로  해주시면돼용! 나중에 고쳐주세요~ -->
-						<li class="nav-item active"><a class="nav-link"
-							href="/pmkim/map">지도</a></li>
-						<!--성진오빠파트-->
-						<li class="nav-item active"><a class="nav-link"
-							href="/pmkim/theme">테마</a></li>
-						<!-- 세호-->
-						<li class="nav-item active"><a class="nav-link"
-							href="/pmkim/event">행사</a></li>
-						<!-- 지혜파트-->
-						<li class="nav-item active"><a class="nav-link"
-							href="/pmkim/cart">만원의 행복</a></li>
-						<!-- 규영언니파트♡ -->
-					</ul>
-				</div>
-			</div>
-		</nav>
-		<!-- End Navigation -->
-	</header>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="navbar-menu">
+                    <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
+                        <li class="nav-item active"><a class="nav-link" href="/pmkim/home">Home</a></li> <!-- href는 jsp/html 형식이 아닌, {/매핑명}으로  해주시면돼용! 나중에 고쳐주세요~ -->
+                        <li class="nav-item active"><a class="nav-link" href="/pmkim/map">지도</a></li> <!--성진오빠파트-->
+                        <li class="nav-item active"><a class="nav-link" href="/pmkim/analysis">SNS 분석</a></li> <!-- 세호-->
+                        <li class="nav-item active"><a class="nav-link" href="/pmkim/event">행사</a></li> <!-- 지혜파트-->
+                        <li class="nav-item active"><a class="nav-link" href="/pmkim/cart">만원의 행복</a></li> <!-- 규영언니파트♡ -->
+                        <li class="nav-item active"><a class="nav-link" href="/pmkim/news">편의점 뉴스</a></li> <!-- 규영언니파트♡ -->
+                        <!-- <li class="nav-item active"><a class="nav-link" data-toggle="modal" data-target="#loginModal" href="/pmkim/#">로그인</a></li>	                        
+						<li class="nav-item active"><a class="nav-link" href="/pmkim/signup">회원가입</a></li> -->
+						<!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+						<c:choose>
+							<c:when test="${msg eq 'success' || !empty sessionMemberId}">
+								<li class="nav-item active"><a class="nav-link" id="userView" href="/pmkim/ownerpage"><img src="/pmkim/resources/images/star.png" style="width:13px;">${sessionMemberId}님</a></li>
+								<li class="nav-item active"><a class="nav-link" id="logout" href="/pmkim/logout"><b>Logout</b></a></li>
+								
+							</c:when>
+							<c:when test="${msg eq 'fail' || msg eq 'logout' || msg eq '' || msg eq null}">
+								<li class="nav-item active"><a class="nav-link" id="login" data-toggle="modal" data-target="#loginModal" href="/pmkim/#">로그인</a></li>
+								<li class="nav-item active"><a class="nav-link" id="signup" href="/pmkim/signup">회원가입</a></li>	
+						    </c:when>
+						</c:choose>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+			
+            </div>
+            
+        </nav>
+        <!-- End Navigation -->
+    </header>
+    
 	<!-- End Main Top -->
 
+<!-- Start login popup -->
+    <div class="container">
+		<!-- <button type="button" class="btn btn-info btn-round" data-toggle="modal" data-target="#loginModal">
+		    Login
+		</button>   -->
+		<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			
+		  <div class="modal-dialog modal-dialog-centered" role="document" >
+		    <div class="modal-content" >
+		      <div class="modal-header border-bottom-0">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body border-bottom-0">
+		      	<div class="form-title text-center"><!--  style="margin-left:auto; margin-right:auto;" -->
+					<img src="/pmkim/resources/images/pmkim_Logo_1.jpg" /> 	
+				</div>
+				<br>
+				
+		        <div class="form-title text-center">
+		          <h4><b>Login</b></h4>
+		        </div>
+		        <div class="d-flex flex-column text-center">
+		        
+		          <form method="post" action="/pmkim/login" id="frmSignin">
+		            <div class="form-group">
+		              <input type="text" class="form-control" name="id" placeholder="Your id...">
+		            </div>
+		            <div class="form-group">
+		              <input type="password" class="form-control" name="pw" placeholder="Your password...">
+		            </div>
+		            <button type="submit" class="btn btn-info btn-block btn-round" id="btnLogin" style="background-color:#0F694D">Login</button> <!-- '/weet/signinCheck.do' -->
+		          </form>
+		          
+		          <!-- <div class="text-center text-muted delimiter">or use a social network</div> -->
+		          <div class="d-flex justify-content-center social-buttons">
+		            <!-- <button type="button" id="btnGoogleSignin" class="btn btn-secondary btn-round" data-toggle="tooltip" data-placement="top" title="Google"
+		           		onclick="
+		           			gauth.signIn().then(function(){
+								console.log('gauth.signIn()');
+								checkLoginStatus();
+								location.reload(true);
+							});
+						" data-dismiss="modal">
+		          		<img src="/pmkim/resources/images/btn_google_light_normal_ios.svg">
+		          	</button> -->
+		          </div>
+		        </div>
+		      </div>
+		      <div class="modal-footer d-flex justify-content-center ">
+			        <div class="signup-section text-center">Not a member yet? 
+			        	<a href="/pmkim/signup">Sign Up</a>.
+			        </div>
+			        <button type="button" class="btn btn-default text-center" data-dismiss="modal">Close</button>
+			        <!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#signupModal">Open Modal</button> -->
+		      </div>
+		    </div>
+		      
+		  </div>
+		</div>
+		
+	</div>
+		<!-- End login popup -->
+    
 	<!-- Start Shop Page  -->
 	<!-- <div class="shop-box-inner"> -->
 	<div class="products-box2">
@@ -189,13 +262,13 @@
 												<div class="products-single fix">
 													<div class="box-img-hover">
 														<div class="type-lb">
-															<p class="sale">${ vo.shop_name }${ vo.event_name }</p>
+															<p class="sale">${ vo.shop_name }</p><p class="sale event_name">${ vo.event_name }</p>
 														</div>
 														<img src="${ vo.good_img }" style="height: 220px; margin-top:30px;"
 															class="img-fluid" alt="Image">
 														<div class="mask-icon">
 															<a class="cart"
-																onclick="add('${vo.good_id}'); return false;">Add</a>
+																onclick="add('${vo.good_id}'); return false;">선택</a>
 														</div>
 													</div>
 													<div class="why-text">
@@ -250,14 +323,14 @@
 										<div id="slider-range"></div>
 										<p>
 											<input type="text" id="amount" readonly
-												style="border: 0; color: #fbb714; font-weight: bold;">
+												style="border: 0; color: #fbb714; font-size: 25px;font-weight: 500;">
 											<button class="btn hvr-hover"
-												onclick="recommend(); return false;">Filter</button>
+												onclick="recommend(); return false;">행복사냥</button>&nbsp;
 											<button class="btn hvr-hover"
-												onclick="deleteCart(); return false;">Reset</button>
-										</p>
-										<div id="cart-View" class="list-group-collapse sub-men">
-											상품을 클릭하세요.
+												onclick="deleteCart(); return false;">초기화</button>
+										</p><br><br>
+										<div id="cart-View" class="list-group-collapse sub-men click-style" >
+											&nbsp;상품을 클릭하세요.<br>
 											<!-- 담은 상품 여기에 나타내기  = add함수의 결과 여기로 가져옴 -->
 										</div>
 										<div id="recommend-View" class="list-group-collapse sub-men">
@@ -275,7 +348,6 @@
 	
 	<!-- End Shop Page -->
 
-	<!-- 20200521_oliver.yoo -->
 	<!-- Start Footer  -->
 	<footer>
 		<div class="footer-main">
@@ -300,39 +372,35 @@
 					<div class="row">
 						<!-- Footer 1-->
 						<div class="col-lg-422 mb-5 mb-lg-0">
-							<a><img src="/pmkim/resources/images/haley.png" class="profile"  alt="" /></a><br>
-							<a href="https://github.com/JihyeHaley"><img src="/pmkim/resources/images/gitprof.png" class="git_img"/></a>
-							<a class="result-text">Haley Oh</a><br>
-							<a class="result-text">You know? I'm 팀장4;)</a><br>
+							<a><img src="/pmkim/resources/images/haley.png" class="profile"  alt="" /></a><br><br>
+							<a href="https://github.com/JihyeHaley" class="result-text">Haley Oh</a><br><br>
+							<a class="result-text">You know? I'm 팀장4;)</a><br><br>
 						<a class= "profile-text">has kinda professional language skills English, Chinese, Japanese. Currently working and studying for full-stack developing skills</a>
 						
 						</div>
 
 						<!-- Footer 2-->
 						<div class="col-lg-422 mb-5 mb-lg-0">
-							<a><img src="/pmkim/resources/images/seho.png" class="profile"   alt="" /></a><br>
-							<a href="https://github.com/sehooh5"><img src="/pmkim/resources/images/gitprof.png" class="git_img"/></a>
-							<a class="result-text">Seho Oh </a><br>
-							<a class="result-text">You know? I'm 팀장1;)</a><br>
+							<a><img src="/pmkim/resources/images/seho.png" class="profile"   alt="" /></a><br><br>
+							<a href="https://github.com/sehooh5" class="result-text">Seho Oh </a><br><br>
+							<a class="result-text">You know? I'm 팀장1;)</a><br><br>
 							<a class= "profile-text">is one of the treasurous in gomgam since he has professional analysis skills based on R selenium. His main major was Design. Amazing!</a>
 						
 						</div>
 
 						<!-- Footer 3-->
 						<div class="col-lg-422 mb-5 mb-lg-0">
-							<a><img src="/pmkim/resources/images/linda.png" class="profile" alt="" /></a><br>
-							<a href="https://github.com/GyuyoungEom"><img src="/pmkim/resources/images/gitprof.png" class="git_img"/></a>
-							<a class="result-text">Linda Eom </a><br>
-							<a class="result-text">You know? I'm 팀장3;)</a><br>
+							<a><img src="/pmkim/resources/images/linda.png" class="profile" alt="" /></a><br><br>
+							<a href="https://github.com/GyuyoungEom" class="result-text">Linda Eom </a><br><br>
+							<a  class="result-text">You know? I'm 팀장3;)</a><br><br>
 							<a class= "profile-text">without her, this work could not be achieved... haha He is superwomen among us. Her diction is based on Austrailia, and she is familiar at super power on everything..!!!! </a>
 						</div>
 
 						<!-- Footer 4-->
 						<div class="col-lg-422 mb-5 mb-lg-0">
-							<a><img src="/pmkim/resources/images/oliver.png" class="profile"  /></a><br>
-							<a href="https://github.com/SeongjinOliver"><img src="/pmkim/resources/images/gitprof.png" class="git_img"/></a>
-							<a class="result-text">Oliver Yoo </a><br>
-							<a class="result-text">You know? I'm 팀장1;)</a><br>
+							<a><img src="/pmkim/resources/images/oliver.png" class="profile"  /></a><br><br>
+							<a href="https://github.com/SeongjinOliver" class="result-text">Oliver Yoo </a><br><br>
+							<a class="result-text">You know? I'm 팀장1;)</a><br><br>
 							<a class= "profile-text">is amazing man because he is familiar with back-frond end, DB, Spring, and Java, C... Cannot count all LOL. Surprise thing is he is even studying himself at every night despite project season :)</a>
 							
 							
@@ -343,29 +411,28 @@
 
 				<div class="row">
 					<div class="col-lg-4 col-md-12 col-sm-12">
-						<div class="footer-widget">
+						<div class="footer-widget" ">
 							<h4>About 편마 김편복</h4>
-							<p>편의점 마스터! 김편복
+							<p class="result-text">편의점 마스터! 김편복
 								데이터, 위치기반을 활용한 편의점 상품 추천 서비스</p>
-							<p>편의점에서 점심을 간단히 먹고 싶은 김편복씨는 자신의 위치에서 먹고자하는
+							<p class="result-text">편의점에서 점심을 간단히 먹고 싶은 김편복씨는 자신의 위치에서 먹고자하는
 								상품 어느 편의점에서 행사를 하는지 알고 싶은데 알 수 있는 방법이 없다!!
 								이럴때 필요한 서비스는 "<b>편마 김편복</b>"</p>
 						</div>
 					</div>
 					<div class="col-lg-4 col-md-12 col-sm-12">
-						<div class="footer-link">
+						<div class="footer-link result-text">
 							<h4>Information</h4>
-							<ul class="result-text">
-								<li><a href="#/pmkim/home" >HOME</a></li>
-								<li><a href="#/pmkim/map">지도</a></li>
-								<li><a href="#/pmkim/theme">테마</a></li>
-								<li><a href="#/pmkim/event">행사</a></li>
-								<li><a href="#/pmkim/cart">장바구니</a></li>
-							</ul>
+								<a href="#/pmkim/home" >  HOME</a><br>
+								<a href="#/pmkim/map">  지도</a><br>
+								<a href="#/pmkim/analysis">  SNS 분석</a><br>
+								<a href="#/pmkim/event">  행사</a><br>
+								<a href="#/pmkim/cart">  만원의 행복</a><br>
+								<a href="#/pmkim/cart">  편의점 뉴스</a>
 						</div>
 					</div>
 					<div class="col-lg-4 col-md-12 col-sm-12">
-						<div class="footer-link-contact">
+						<div class="footer-link-contact result-text">
 							<h4>Contact Us</h4>
 							<ul>
 								<li>
@@ -401,7 +468,6 @@
 		</p>
 	</div>
 	<!-- End copyright  -->
-	
 	<a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
 
 	<!-- ALL JS FILES -->
@@ -424,153 +490,180 @@
 	<script src="/pmkim/resources/js/contact-form-script.js"></script>
 	<script src="/pmkim/resources/js/custom_linda.js"></script>
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-	
+
 	<!-- custom js -->
 	<script>
-		function recommend(){			
+		function recommend() {
 			//클릭한 아이템 받아오기
 			//그 아이템에 대해서 추천 아이템 가져오기
 			//var good_id = document.getElementByClassName('good_id');
 			console.log(document.getElementById('selectId'));
 			var good_id = document.getElementById('selectId').value;
 			var shop_name = document.getElementById('shop_name').value;
-			var maxM = $('#amount').val().split('-')[0].replace('원',"")*1;
+			var maxM = $('#amount').val().split('-')[0].replace('원', "") * 1;
 			$.ajax({
-				type :"get",// 전송 방식 
-				url :"/pmkim/happy",  //컨트롤러 사용할 때. 내가 보낼 데이터의 주소. 
-				data : {"good_id" : good_id,
-						"shop_name" : shop_name,
-						"maxM" : maxM
-						},
-				dataType : "json",	// text, xml, html, script, json, jsonp 가능 
-				success : function(data){	
-					if(data=="1"){
+				type : "get",// 전송 방식 
+				url : "/pmkim/happy", //컨트롤러 사용할 때. 내가 보낼 데이터의 주소. 
+				data : {
+					"good_id" : good_id,
+					"shop_name" : shop_name,
+					"maxM" : maxM
+				},
+				dataType : "json", // text, xml, html, script, json, jsonp 가능 
+				success : function(data) {
+					if (data == "1") {
 						/* if( ${ recomPrice } <= 0){
 							alert(${ msg });
 						}else{
 							document.getElementById('recommend-View').innerHTML = ${recomGoods1};
 						} */
-						postHappy(good_id,shop_name,maxM);
-					}else{
+						postHappy(good_id, shop_name, maxM);
+					} else {
 						alert("추천 상품이 없습니다.");
 					}
 				},
-				error : function(){
+				error : function() {
 					alert("프로그램 에러가 발생했습니다.");
 				}
-				//console.log(document.querySelector("#cart-View > img"));
+			//console.log(document.querySelector("#cart-View > img"));
 			});
-			
-			var x = $('#amount').val().split('-')[0].replace('원',"")*1;
+
+			var x = $('#amount').val().split('-')[0].replace('원', "") * 1;
 			console.log(x);
 			//console.log($('#slider-range').slide());	
 
 		}
-		
+
 		//ajax function
-		function postHappy(good_id,shop_name,maxM){
-			
+		function postHappy(good_id, shop_name, maxM) {
+
 			var good_price = document.getElementById('good_price').value;
-			var recomPrice = maxM*1-good_price.replace("원","").replace(",","")*1;
+			var recomPrice = maxM * 1
+					- good_price.replace("원", "").replace(",", "") * 1;
 			document.getElementById('recommend-View').innerHTML = "";
-			$.ajax({
-				type :"post",// 전송 방식 
-				url :"/pmkim/happy",  //컨트롤러 사용할 때. 내가 보낼 데이터의 주소. 
-				data : {"good_id" : good_id,
-						"shop_name" : shop_name,
-						"maxM" : maxM
+			$
+					.ajax({
+						type : "post",// 전송 방식 
+						url : "/pmkim/happy", //컨트롤러 사용할 때. 내가 보낼 데이터의 주소. 
+						data : {
+							"good_id" : good_id,
+							"shop_name" : shop_name,
+							"maxM" : maxM
 						},
-				dataType : "json",	// text, xml, html, script, json, jsonp 가능 
-				success : function(data){	
-					//console.log(data[0].good_name);
-					document.getElementById('recommend-View').innerHTML = "<p>함께 즐기면 좋은 상품</p> <hr>";
-					if ( data != null){
-						if(recomPrice <=0 ){
-							alert('금액내에 알맞는 추천 상품이 없습니다.');
-						}else if(recomPrice <= 5000){
-							document.getElementById('recommend-View').innerHTML += data[0].good_name 
-																				+ "<img src = '"+data[0].good_img+"' class ='img-fluid'>"
-																				+ data[0].good_price +"원" ;
-						}else{
-							document.getElementById('recommend-View').innerHTML += data[0].good_name 
-																				+ "<img src = '"+data[0].good_img+"' class ='img-fluid'>"
-																				+ data[0].good_price +"원"+ "<br>";
-							document.getElementById('recommend-View').innerHTML += data[1].good_name
-																				+ "<img src = '"+data[1].good_img+"' class ='img-fluid'>"
-																				+ data[1].good_price +"원" ;
+						dataType : "json", // text, xml, html, script, json, jsonp 가능 
+						success : function(data) {
+							//console.log(data[0].good_name);
+							document.getElementById('recommend-View').innerHTML = "<p>함께 즐기면 좋은 상품</p> <hr>";
+							if (data != null) {
+								if (recomPrice <= 0) {
+									alert('금액내에 알맞는 추천 상품이 없습니다.');
+								} else if (recomPrice <= 5000) {
+									document.getElementById('recommend-View').innerHTML += data[0].good_name
+											+ "<img src = '"+data[0].good_img+"' class ='img-fluid' width=120>"
+											+ data[0].good_price + "원";
+								} else {
+									if(data[0].good_price+data[1].good_price <= recomPrice){
+				                        document.getElementById('recommend-View').innerHTML += data[0].good_name 
+				                                                                  + "<img src = '"+data[0].good_img+"' class ='img-fluid'>"
+				                                                                  + data[0].good_price +"원"+ "<br>";
+				                        document.getElementById('recommend-View').innerHTML += data[1].good_name
+				                                                                  + "<img src = '"+data[1].good_img+"' class ='img-fluid'>"
+				                                                                  + data[1].good_price +"원" ;
+				                     }else{
+				                        document.getElementById('recommend-View').innerHTML += data[1].good_name
+				                                                                  + "<img src = '"+data[1].good_img+"' class ='img-fluid'>"
+				                                                                  + data[1].good_price +"원" ;
+				                     }								}
+							} else {
+								alert('상품을 선택해주세요.');
+							}
+						},
+						error : function() {
+							alert("프로그램 에러가 발생했습니다.");
 						}
-					}else{
-						alert('상품을 선택해주세요.');
-					}
-				},
-				error : function(){
-					alert("프로그램 에러가 발생했습니다.");
-				}
-				//console.log(document.querySelector("#cart-View > img"));
-			});
+					//console.log(document.querySelector("#cart-View > img"));
+					});
 		}
-		
+
 		//클릭 상품 저장
-		function add(good_id){
-			$.ajax({
-				type :"post",
-				url :"/pmkim/cart",  
-				data : {"action" : "insert",
-						"good_id" : good_id},
-				dataType : "json",	// text, xml, html, script, json, jsonp 가능 
-				//async : false,
-				success : function(data){	
-					if(data=="1"){
+		function add(good_id) {
+			$
+					.ajax({
+						type : "post",
+						url : "/pmkim/cart",
+						data : {
+							"action" : "insert",
+							"good_id" : good_id
+						},
+						dataType : "json", // text, xml, html, script, json, jsonp 가능 
+						//async : false,
+						success : function(data) {
+							if (data == "1") {
 
-						var key = [];			//id값 담을 변수 선언
-						var num = document.getElementsByClassName('good_id').length
-						for(var i=0; i<num; i++){
-							key[i] = document.getElementsByClassName('good_id')[i].value;
+								var key = []; //id값 담을 변수 선언
+								var num = document
+										.getElementsByClassName('good_id').length
+								for (var i = 0; i < num; i++) {
+									key[i] = document
+											.getElementsByClassName('good_id')[i].value;
+								}
+								var good_name = document
+										.getElementsByClassName('good_name')[key
+										.indexOf(good_id)].innerHTML;
+								var good_img = document
+										.getElementsByClassName('img-fluid')[key
+										.indexOf(good_id)].getAttribute('src');
+								var shop_name = document
+										.getElementsByClassName('sale')[key
+										.indexOf(good_id)].innerHTML;
+								var good_price = document
+										.getElementsByClassName('good_price')[key
+										.indexOf(good_id)].innerHTML;
+
+								document.getElementById('cart-View').innerHTML = "<p id='result_name'>"
+										+ good_name
+										+ "</p> <br>"
+										+ "<img src = '"+good_img+"' class ='img-fluid' width='200'>"
+										+ "<input type='hidden' value = '"+good_id+"' id = 'selectId' name='selectId'>"
+										+ "<input type='hidden' value = '"+shop_name+"' id = 'shop_name'>"
+										+ "<input type='hidden' value = '"+good_price+"' id = 'good_price'>";
+
+							} else {
+								alert("상품이 선택되지 않았습니다.");
+							}
+						},
+						error : function() {
+							alert("프로그램 에러가 발생했습니다.");
 						}
-						var good_name = document.getElementsByClassName('good_name')[key.indexOf(good_id)].innerHTML;
-						var good_img = document.getElementsByClassName('img-fluid')[key.indexOf(good_id)].getAttribute('src');
-						var shop_name = document.getElementsByClassName('sale')[key.indexOf(good_id)].innerHTML;
-						var good_price = document.getElementsByClassName('good_price')[key.indexOf(good_id)].innerHTML;
+					});
 
-						document.getElementById('cart-View').innerHTML = "<p id='result_name'>"+ good_name + "</p> <br>"+"<img src = '"+good_img+"' class ='img-fluid'>"
-																		+"<input type='hidden' value = '"+good_id+"' id = 'selectId' name='selectId'>"
-																		+"<input type='hidden' value = '"+shop_name+"' id = 'shop_name'>"
-																		+"<input type='hidden' value = '"+good_price+"' id = 'good_price'>";
-
-					}else{
-						alert("상품이 선택되지 않았습니다.");
-					}
-				},
-				error : function(){
-					alert("프로그램 에러가 발생했습니다.");
-				}
-			});
-			
 		}
-		
+
 		//클릭상품 해제
-		function deleteCart(){
+		function deleteCart() {
 			$.ajax({
-				type :"post",// 전송 방식 
-				url :"/pmkim/cart",  //컨트롤러 사용할 때. 내가 보낼 데이터의 주소. 
-				data : {"action" : "delete"},
-				dataType : "json",	// text, xml, html, script, json, jsonp 가능 
-				success : function(data){	
-					if(data=="1"){
-						document.getElemen
-						
-						tById('cart-View').innerHTML = '상품을 클릭하세요.';
-					}else{
+				type : "post",// 전송 방식 
+				url : "/pmkim/cart", //컨트롤러 사용할 때. 내가 보낼 데이터의 주소. 
+				data : {
+					"action" : "delete"
+				},
+				dataType : "json", // text, xml, html, script, json, jsonp 가능 
+				success : function(data) {
+					if (data == "1") {
+						document.getElementById('cart-View').innerHTML = '상품을 클릭하세요.';
+						document.getElementById('recommend-View').innerHTML = '';
+
+					} else {
 						alert("선택한 상품이 없습니다.");
 					}
 				},
-				error : function(){
+				error : function() {
 					alert("프로그램 에러가 발생했습니다.");
 				}
 			});
 		}
 	</script>
-	
+
 </body>
 
 </html>

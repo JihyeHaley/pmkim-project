@@ -504,17 +504,7 @@
      background-color: #222 !important;
      color: #6f6f6f;
 }
- nav.navbar.bootsnav ul.nav > li > a{
-     position: relative;
-     font-weight: 700;
-     font-size: 16px;
-     color: #000000;
-	 text-transform: uppercase;
-     padding-top: 10px;
-     padding-bottom: 10px;
-     padding-left: 10px;
-     padding-right: 30px;
-}
+
  nav.navbar.bootsnav ul.nav li.active > a{
      color: #0F694D;
 }

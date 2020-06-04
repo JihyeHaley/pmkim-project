@@ -15,6 +15,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -23,12 +24,13 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.stereotype.Service;
 
-import java.util.Date;
-
+//@Service
 public class NaverApiSearchNews {
-		
-    public static void main(String[] args) throws Exception{
+	
+	//@Scheduled(cron="* * 12 * * *")
+    public void naverNews() throws Exception{
         String clientId = "FZqBsDALM8L8w7aa_vY5"; //애플리케이션 클라이언트 아이디값"
         String clientSecret = "RDK08h85bB"; //애플리케이션 클라이언트 시크릿값"
 

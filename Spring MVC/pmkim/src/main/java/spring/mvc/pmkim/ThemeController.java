@@ -7,21 +7,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import dao.AnalysisDAO;
-import vo.AnalysisVO;
+import dao.ThemeDAO;
+import vo.GoodsInfoThemeVO;
 
 
 @Controller
 public class ThemeController {
 	
 	@Autowired
-	private AnalysisDAO ThemeDAO;
+	private ThemeDAO ThemeDAO;
 
 	
 	@RequestMapping(value="/theme")
-	public ModelAndView theme(AnalysisVO gitvo) {
+	public ModelAndView theme(GoodsInfoThemeVO gitvo) {
 
-		List<AnalysisVO> li = ThemeDAO.allGoods(gitvo);
+		List<GoodsInfoThemeVO> li = ThemeDAO.allGoods(gitvo);
 		ModelAndView mav = new ModelAndView();
 		//값 확인
 		//System.out.println("Con : " + li.get(0).toString());

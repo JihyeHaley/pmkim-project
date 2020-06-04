@@ -15,22 +15,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Site Metas -->
-    <title>편마, 김편복</title>
+    <title>편마, 김편복 - Home</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="author" content="">
 
     <!-- Site Icons -->
     <link rel="icon" href="/pmkim/resources/images/pmkim.png"  type="image/png" sizes="16X16">
-    
     <!--  Fonts -->
 	<link rel="stylesheet" href= '//cdn.rawgit.com/young-ha/webfont-archive/master/css/Youth.css' type='text/css'>
-    
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/pmkim/resources/css/bootstrap.min.css">
     <!-- Site CSS -->
     <link rel="stylesheet" href="/pmkim/resources/css/style.css">
-    <link rel="stylesheet" href="/pmkim/resources/css/style_home.css">
+	<link rel="stylesheet" href="/pmkim/resources/css/style_home.css">
     <link rel="stylesheet" href="/pmkim/resources/css/style_nav.css">
     <link rel="stylesheet" href="/pmkim/resources/css/footerus.css">
     <!-- Responsive CSS -->
@@ -42,7 +41,8 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
+	<script type="text/javascript"
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=da9ee51fb08b7986257790a5d30ebc55&libraries=services,clusterer,drawing"></script>
 </head>
 
 <body>
@@ -51,7 +51,6 @@
 			List<GoodsEventShopMemberVO> twolist = (ArrayList<GoodsEventShopMemberVO>) request.getAttribute("twolist");
 			List<GoodsEventShopMemberVO> pblist = (ArrayList<GoodsEventShopMemberVO>) request.getAttribute("pblist");
 %>
-
 	<c:set var="sessionMemberId" value="${ sessionScope.id }"/>
     <!-- Start Main Top -->
     <header class="main-header">
@@ -63,7 +62,7 @@
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fa fa-bars"></i>
                 </button>
-                    <a class="navbar-brand" href="/pmkim/main"><img src="/pmkim/resources/images/pmkim_Logo_1.jpg" class="logo" alt=""></a>
+                    <a class="navbar-brand" href="/pmkim/home"><img src="/pmkim/resources/images/pmkim_Logo_1.jpg" class="logo" alt=""></a>
                 </div>
                 <!-- End Header Navigation -->
 
@@ -72,9 +71,10 @@
                     <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
                         <li class="nav-item active"><a class="nav-link" href="/pmkim/home">Home</a></li> <!-- href는 jsp/html 형식이 아닌, {/매핑명}으로  해주시면돼용! 나중에 고쳐주세요~ -->
                         <li class="nav-item active"><a class="nav-link" href="/pmkim/map">지도</a></li> <!--성진오빠파트-->
-                        <li class="nav-item active"><a class="nav-link" href="/pmkim/theme">테마</a></li> <!-- 세호-->
+                        <li class="nav-item active"><a class="nav-link" href="/pmkim/analysis">SNS 분석</a></li> <!-- 세호-->
                         <li class="nav-item active"><a class="nav-link" href="/pmkim/event">행사</a></li> <!-- 지혜파트-->
                         <li class="nav-item active"><a class="nav-link" href="/pmkim/cart">만원의 행복</a></li> <!-- 규영언니파트♡ -->
+                        <li class="nav-item active"><a class="nav-link" href="/pmkim/news">편의점 뉴스</a></li> <!-- 규영언니파트♡ -->
                         <!-- <li class="nav-item active"><a class="nav-link" data-toggle="modal" data-target="#loginModal" href="/pmkim/#">로그인</a></li>	                        
 						<li class="nav-item active"><a class="nav-link" href="/pmkim/signup">회원가입</a></li> -->
 						<!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
@@ -95,9 +95,6 @@
 			
             </div>
             
-            <!-- Login -->
-           
-			<!-- Login End-->
         </nav>
         <!-- End Navigation -->
     </header>
@@ -168,53 +165,34 @@
 	</div>
 		<!-- End login popup -->
     
-
-    <!-- Start Top Search -->
-    <div class="top-search">
-        <div class="container">
-            <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                <input type="text" class="form-control" placeholder="Search">
-                <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
-            </div>
-        </div>
-    </div>
-    <!-- End Top Search -->
-
-    <!-- Start Slider -->
+	<!-- Start Slider -->
     <div id="slides-shop" class="cover-slides">
         <ul class="slides-container">
-            <li class="text-center">
-                <img src="/pmkim/resources/images/home2.png" alt="">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h1 class="m-b-20"><strong>바쁜세상 편하게 살자!!<br>이곳은 PMKIM</strong></h1>
-                            <p class="m-b-40">편의점 마스터, <strong>김편복</strong> <br> 모든 편의점의 행사상품을 한 곳에서 확인할 수 있다네~</p>
-                            <p><a  href="/pmkim/event">이벤드 상품 둘러보러가기</a></p>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="text-center">
-                <img src="/pmkim/resources/images/banner-02.jpg" alt="">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h1 class="m-b-20"><strong>Welcome To <br> Freshshop</strong></h1>
-                            <p class="m-b-40">See how your users experience your website in realtime or view <br> trends to see any changes in performance over time.</p>
-                            <p><a class="btn hvr-hover" href="/pmkim/theme">추천 알고리즘 경험해보러가기</a></p>
-                        </div>
-                    </div>
-                </div>
-            </li>
             <li class="text-center">
                 <img src="/pmkim/resources/images/home1.png" alt="">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <h1 class="m-b-20"><strong> <br></strong></h1><br><br><br>
-                            <p class="m-b-40">Linda, Seho, Oliver, Haley<br>서비스 개발자 소개<br>우리 진짜 힘들었어요...ㅎㅎ</p>
+                            <h1 class="header-words"><a href="/pmkim/event"> 행사상품 둘러보기 </a></h1>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="text-center">
+                <img src="/pmkim/resources/images/home2.png" alt="">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="text-center">
+                <img src="/pmkim/resources/images/home3.png" alt="">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                             <h1 class="header-words"><a href="/pmkim/cart"> 만원의 행복 내가 만들어보기 </a></h1>
                         </div>
                     </div>
                 </div>
@@ -227,144 +205,38 @@
     </div>
     <!-- End Slider -->
 
-    <!-- Start Categories  -->
-    <div class="categories-shop">
+
+
+	<!-- Start MAP  -->
+    <div class="products-box33">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                    <div class="shop-cat-box">
-                        <img class="img-fluid" src="/pmkim/resources/images/categories_img_01.jpg" alt="" />
-                        <a class="btn hvr-hover" href="#">Lorem ipsum dolor</a>
+        	<br>
+                <div class="col-lg-12">
+                    <div class="title-all text-center">
+                    <img class="map-img" src ="/pmkim/resources/images/gs.png"/>
+                    <img class="map-img" src ="/pmkim/resources/images/cu1.png"/>
+                    <img class="map-img" src ="/pmkim/resources/images/emart24.png"/>
+                    <img class="map-img" src ="/pmkim/resources/images/ministop.png"/>
+                    <img class="map-img-small" src ="/pmkim/resources/images/seveneleven.png"/><br><br>
+                    <a class="event-href" href="/pmkim/map">지도</a><br>
+                     <a class="event-a" href="/pmkim/map">주변의 편의점을</a>
+                     <a class="event-a" href="/pmkim/map" style="color:red">찾아보세요~</a><br>
+                     <a class="event-a" href="/pmkim/map" style="color:grey">이곳을 클릭해보세요!</a><br><br>
+                    <div id="map" class="map-border" style="width: 100%; height: 500px;"></div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                    <div class="shop-cat-box">
-                        <img class="img-fluid" src="/pmkim/resources/images/categories_img_02.jpg" alt="" />
-                        <a class="btn hvr-hover" href="#">Lorem ipsum dolor</a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                    <div class="shop-cat-box">
-                        <img class="img-fluid" src="/pmkim/resources/images/categories_img_03.jpg" alt="" />
-                        <a class="btn hvr-hover" href="#">Lorem ipsum dolor</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+    	</div>
     </div>
-    <!-- End Categories -->
-	
-	<div class="box-add-products">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-6 col-md-6 col-sm-12">
-					<div class="offer-box-products">
-						<img class="img-fluid" src="/pmkim/resources/images/add-img-01.jpg" alt="" />
-					</div>
-				</div>
-				<div class="col-lg-6 col-md-6 col-sm-12">
-					<div class="offer-box-products">
-						<img class="img-fluid" src="/pmkim/resources/images/add-img-02.jpg" alt="" />
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <!-- End MAP  -->
 
 
 
 
- <!-- Start Instagram Feed  
-    <div class="instagram-box">
-        <div class="main-instagram owl-carousel owl-theme">
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="/pmkim/resources/images/instagram-img-01.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="/pmkim/resources/images/instagram-img-02.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="/pmkim/resources/images/instagram-img-03.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="/pmkim/resources/images/instagram-img-04.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="/pmkim/resources/images/instagram-img-05.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="/pmkim/resources/images/instagram-img-06.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="/pmkim/resources/images/instagram-img-07.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="/pmkim/resources/images/instagram-img-08.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="/pmkim/resources/images/instagram-img-09.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img src="/pmkim/resources/images/instagram-img-05.jpg" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    End Instagram Feed  -->
-
-    <!-- Start Products  -->
+	<!-- Start Products  -->
     <div class="products-box">
         <div class="container">
-            <div class="row">
+ 
+			<div class="row">
                 <div class="col-lg-12">
                     <div class="title-all text-center">
                         <a class="event-href" href="/pmkim/event">행사상품</a><br>
@@ -458,15 +330,18 @@
         </div> 
     </div>
     <!-- End Products  -->
-
+    
+    
     <!-- Start Blog  -->
     <div class="latest-blog">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="title-all text-center">
-                        <h1>latest blog</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet lacus enim.</p>
+                   		 <a class="event-href" href="/pmkim/analysis">SNS분석</a><br>
+                        <a class="event-a" href="/pmkim/analysis"></a>
+                         <a class="event-a" href="/pmkim/analysis" style="color:red">인기 있는</a>
+                         <a class="event-a" href="/pmkim/analysis">편의점 SNS 분석을 보기위해서 이곳을 클릭해주세요!</a><br><br>
                     </div>
                 </div>
             </div>
@@ -474,54 +349,39 @@
                 <div class="col-md-6 col-lg-4 col-xl-4">
                     <div class="blog-box">
                         <div class="blog-img">
-                            <img class="img-fluid" src="/pmkim/resources/images/blog-img.jpg" alt="" />
+                            <img class="img-fluid" src="/pmkim/resources/images/a_1.jpg" alt="" />
                         </div>
                         <div class="blog-content">
                             <div class="title-blog">
-                                <h3>Fusce in augue non nisi fringilla</h3>
-                                <p>Nulla ut urna egestas, porta libero id, suscipit orci. Quisque in lectus sit amet urna dignissim feugiat. Mauris molestie egestas pharetra. Ut finibus cursus nunc sed mollis. Praesent laoreet lacinia elit id lobortis.</p>
+                                <h3>1위, 세븐일레븐</h3>
+                                <p>편의점 7-Eleven, 가맹점주 모집 및 점포개발사업, 예약도시락, 멤버쉽, 택배 서비스 안내.</p>
                             </div>
-                            <ul class="option-blog">
-                                <li><a href="#"><i class="far fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fas fa-eye"></i></a></li>
-                                <li><a href="#"><i class="far fa-comments"></i></a></li>
-                            </ul>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-4 col-xl-4">
                     <div class="blog-box">
                         <div class="blog-img">
-                            <img class="img-fluid" src="/pmkim/resources/images/blog-img-01.jpg" alt="" />
+                            <img class="img-fluid" src="/pmkim/resources/images/a_2.jpg" alt="" />
                         </div>
                         <div class="blog-content">
                             <div class="title-blog">
-                                <h3>Fusce in augue non nisi fringilla</h3>
-                                <p>Nulla ut urna egestas, porta libero id, suscipit orci. Quisque in lectus sit amet urna dignissim feugiat. Mauris molestie egestas pharetra. Ut finibus cursus nunc sed mollis. Praesent laoreet lacinia elit id lobortis.</p>
+                                <h3>2위, GS25</h3>
+                                <p>일상생활의 중심, 하루의 시작 Lifestyle Platform GS25</p>
                             </div>
-                            <ul class="option-blog">
-                                <li><a href="#"><i class="far fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fas fa-eye"></i></a></li>
-                                <li><a href="#"><i class="far fa-comments"></i></a></li>
-                            </ul>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-4 col-xl-4">
                     <div class="blog-box">
                         <div class="blog-img">
-                            <img class="img-fluid" src="/pmkim/resources/images/blog-img-02.jpg" alt="" />
+                            <img class="img-fluid" src="/pmkim/resources/images/a_3.jpg" alt="" />
                         </div>
                         <div class="blog-content">
                             <div class="title-blog">
-                                <h3>Fusce in augue non nisi fringilla</h3>
-                                <p>Nulla ut urna egestas, porta libero id, suscipit orci. Quisque in lectus sit amet urna dignissim feugiat. Mauris molestie egestas pharetra. Ut finibus cursus nunc sed mollis. Praesent laoreet lacinia elit id lobortis.</p>
+                                <h3>3위, CU</h3>
+                                <p>편의점 미니스톱 소개, 소매점 개업 안내, 경영주 모집, 신상품 정보 및 고객정보.</p>
                             </div>
-                            <ul class="option-blog">
-                                <li><a href="#"><i class="far fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fas fa-eye"></i></a></li>
-                                <li><a href="#"><i class="far fa-comments"></i></a></li>
-                            </ul>
                         </div>
                     </div>
                 </div>
@@ -530,7 +390,7 @@
     </div>
     <!-- End Blog  -->
 
-    <!-- 20200521_oliver.yoo -->
+    
 	<!-- Start Footer  -->
 	<footer>
 		<div class="footer-main">
@@ -555,39 +415,35 @@
 					<div class="row">
 						<!-- Footer 1-->
 						<div class="col-lg-422 mb-5 mb-lg-0">
-							<a><img src="/pmkim/resources/images/haley.png" class="profile"  alt="" /></a><br>
-							<a href="https://github.com/JihyeHaley"><img src="/pmkim/resources/images/gitprof.png" class="git_img"/></a>
-							<a class="result-text">Haley Oh</a><br>
-							<a class="result-text">You know? I'm 팀장4;)</a><br>
+							<a><img src="/pmkim/resources/images/haley.png" class="profile"  alt="" /></a><br><br>
+							<a href="https://github.com/JihyeHaley" class="result-text">Haley Oh</a><br><br>
+							<a class="result-text">You know? I'm 팀장4;)</a><br><br>
 						<a class= "profile-text">has kinda professional language skills English, Chinese, Japanese. Currently working and studying for full-stack developing skills</a>
 						
 						</div>
 
 						<!-- Footer 2-->
 						<div class="col-lg-422 mb-5 mb-lg-0">
-							<a><img src="/pmkim/resources/images/seho.png" class="profile"   alt="" /></a><br>
-							<a href="https://github.com/sehooh5"><img src="/pmkim/resources/images/gitprof.png" class="git_img"/></a>
-							<a class="result-text">Seho Oh </a><br>
-							<a class="result-text">You know? I'm 팀장1;)</a><br>
+							<a><img src="/pmkim/resources/images/seho.png" class="profile"   alt="" /></a><br><br>
+							<a href="https://github.com/sehooh5" class="result-text">Seho Oh </a><br><br>
+							<a class="result-text">You know? I'm 팀장1;)</a><br><br>
 							<a class= "profile-text">is one of the treasurous in gomgam since he has professional analysis skills based on R selenium. His main major was Design. Amazing!</a>
 						
 						</div>
 
 						<!-- Footer 3-->
 						<div class="col-lg-422 mb-5 mb-lg-0">
-							<a><img src="/pmkim/resources/images/linda.png" class="profile" alt="" /></a><br>
-							<a href="https://github.com/GyuyoungEom"><img src="/pmkim/resources/images/gitprof.png" class="git_img"/></a>
-							<a class="result-text">Linda Eom </a><br>
-							<a class="result-text">You know? I'm 팀장3;)</a><br>
+							<a><img src="/pmkim/resources/images/linda.png" class="profile" alt="" /></a><br><br>
+							<a href="https://github.com/GyuyoungEom" class="result-text">Linda Eom </a><br><br>
+							<a  class="result-text">You know? I'm 팀장3;)</a><br><br>
 							<a class= "profile-text">without her, this work could not be achieved... haha He is superwomen among us. Her diction is based on Austrailia, and she is familiar at super power on everything..!!!! </a>
 						</div>
 
 						<!-- Footer 4-->
 						<div class="col-lg-422 mb-5 mb-lg-0">
-							<a><img src="/pmkim/resources/images/oliver.png" class="profile"  /></a><br>
-							<a href="https://github.com/SeongjinOliver"><img src="/pmkim/resources/images/gitprof.png" class="git_img"/></a>
-							<a class="result-text">Oliver Yoo </a><br>
-							<a class="result-text">You know? I'm 팀장1;)</a><br>
+							<a><img src="/pmkim/resources/images/oliver.png" class="profile"  /></a><br><br>
+							<a href="https://github.com/SeongjinOliver" class="result-text">Oliver Yoo </a><br><br>
+							<a class="result-text">You know? I'm 팀장1;)</a><br><br>
 							<a class= "profile-text">is amazing man because he is familiar with back-frond end, DB, Spring, and Java, C... Cannot count all LOL. Surprise thing is he is even studying himself at every night despite project season :)</a>
 							
 							
@@ -598,29 +454,28 @@
 
 				<div class="row">
 					<div class="col-lg-4 col-md-12 col-sm-12">
-						<div class="footer-widget">
+						<div class="footer-widget" ">
 							<h4>About 편마 김편복</h4>
-							<p>편의점 마스터! 김편복
+							<p class="result-text">편의점 마스터! 김편복
 								데이터, 위치기반을 활용한 편의점 상품 추천 서비스</p>
-							<p>편의점에서 점심을 간단히 먹고 싶은 김편복씨는 자신의 위치에서 먹고자하는
+							<p class="result-text">편의점에서 점심을 간단히 먹고 싶은 김편복씨는 자신의 위치에서 먹고자하는
 								상품 어느 편의점에서 행사를 하는지 알고 싶은데 알 수 있는 방법이 없다!!
 								이럴때 필요한 서비스는 "<b>편마 김편복</b>"</p>
 						</div>
 					</div>
 					<div class="col-lg-4 col-md-12 col-sm-12">
-						<div class="footer-link">
+						<div class="footer-link result-text">
 							<h4>Information</h4>
-							<ul class="result-text">
-								<li><a href="#/pmkim/home" >HOME</a></li>
-								<li><a href="#/pmkim/map">지도</a></li>
-								<li><a href="#/pmkim/theme">테마</a></li>
-								<li><a href="#/pmkim/event">행사</a></li>
-								<li><a href="#/pmkim/cart">장바구니</a></li>
-							</ul>
+								<a href="#/pmkim/home" >  HOME</a><br>
+								<a href="#/pmkim/map">  지도</a><br>
+								<a href="#/pmkim/analysis">  SNS 분석</a><br>
+								<a href="#/pmkim/event">  행사</a><br>
+								<a href="#/pmkim/cart">  만원의 행복</a><br>
+								<a href="#/pmkim/cart">  편의점 뉴스</a>
 						</div>
 					</div>
 					<div class="col-lg-4 col-md-12 col-sm-12">
-						<div class="footer-link-contact">
+						<div class="footer-link-contact result-text">
 							<h4>Contact Us</h4>
 							<ul>
 								<li>
@@ -658,16 +513,136 @@
 	<!-- End copyright  -->
 
     <a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
+    
+    <!-- MAP -->
+    <script>
+		// 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
+		var infowindow = new kakao.maps.InfoWindow({zIndex:1});
+		
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		    mapOption = {
+		        center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+		        level: 3 // 지도의 확대 레벨
+		    };  
+		
+		// 지도를 생성합니다    
+		var map = new kakao.maps.Map(mapContainer, mapOption); 
+		
+		// 장소 검색 객체를 생성합니다
+		var ps = new kakao.maps.services.Places(); 
+		
+		// 키워드로 장소를 검색합니다
+		//ps.keywordSearch('편의점', placesSearchCB);
+		
+		var imageSrc = null, 
+    	imageSize = new kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
+	    imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+	 	// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+	    var markerImage;
+	    
+		if (navigator.geolocation) {
+			//console.log("geolocation!!!!!!!!!!!!!!");
+			// GeoLocation을 이용해서 접속 위치를 얻어옵니다
+			navigator.geolocation.getCurrentPosition(function(position) {
+				lat = position.coords.latitude, // 위도
+				lon = position.coords.longitude; // 경도
+				//console.log("lat1: "+lat);
+				//console.log("lon1: "+lon);
+				// var locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+				//     message = '<div style="padding:5px;">편의점 명을 정확히 기재해주세요!</div>'; // 인포윈도우에 표시될 내용입니다
+				//마커와 인포윈도우를 표시합니다   
+				// oneDisplayMarker(locPosition, message);
+
+				ps.keywordSearch('편의점', placesSearchCB, {
+					// LatLng : 중심 좌표. 특정 지역을 기준으로 검색한다.
+					location: new kakao.maps.LatLng(lat, lon)
+				});
+			});
+		} else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+			var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),
+				message = '현재 위치를 찾을 수 없어요..'
+				
+			oneDisplayMarker(locPosition, message);
+
+			ps.keywordSearch('편의점', placesSearchCB, {
+				// LatLng : 중심 좌표. 특정 지역을 기준으로 검색한다.
+				location: new kakao.maps.LatLng(locPosition)
+			});
+		}
+		
+		// 키워드 검색 완료 시 호출되는 콜백함수 입니다
+		function placesSearchCB (data, status, pagination) {
+		    if (status === kakao.maps.services.Status.OK) {
+		
+		        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+		        // LatLngBounds 객체에 좌표를 추가합니다
+		        var bounds = new kakao.maps.LatLngBounds();
+		
+		        for (var i=0; i<data.length; i++) {
+		        	var str = data[i].place_name;
+		        	var res = str.split(" ");
+		        	var shop_code = res[0];
+		        	console.log("shop code  "+shop_code);
+		        	
+		        	// 마커이미지의 주소입니다
+		        	if(shop_code == 'CU'){
+		        		imageSrc = '/pmkim/resources/images/cu1.png';
+		        	}else if(shop_code == 'GS25'){
+		        		imageSrc = '/pmkim/resources/images/map/gs_home.png';
+		        	}else if(shop_code == '이마트24'){
+		        		imageSrc = '/pmkim/resources/images/map/e24.png';
+		        	}else if(shop_code == '세븐일레븐'){
+		        		imageSrc = '/pmkim/resources/images/seveneleven.png';
+		        	}else if(shop_code == '미니스톱'){
+		        		imageSrc = '/pmkim/resources/images/map/ministop_home.png';
+		        	}else imageSrc = null;
+		        	
+		        	markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+		        	//console.log("place name2 : "+data[i].place_name)
+		            displayMarker(data[i]);
+	
+					var location = new kakao.maps.LatLng(data[i].y, data[i].x); 
+                    bounds.extend(location);
+		            //bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+		        }       
+		
+		        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+		        map.setBounds(bounds);
+		    } 
+		}
+		
+		// 지도에 마커를 표시하는 함수입니다
+		function displayMarker(place) {
+		    
+		    // 마커를 생성하고 지도에 표시합니다
+		    var marker = new kakao.maps.Marker({
+		        map: map,
+		        image: markerImage,
+		        position: new kakao.maps.LatLng(place.y, place.x) 
+		    });
+
+        	
+		    // 마커에 클릭이벤트를 등록합니다
+		    kakao.maps.event.addListener(marker, 'click', function() {
+		        // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+		        infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
+		        infowindow.open(map, marker);
+		    });
+		}
+	</script>
+    
+    <!-- END MAP -->
 
     <!-- ALL JS FILES -->
     <script src="/pmkim/resources/js/jquery-3.2.1.min.js"></script>
     <script src="/pmkim/resources/js/popper.min.js"></script>
     <script src="/pmkim/resources/js/bootstrap.min.js"></script>
     <!-- ALL PLUGINS -->
+    <script src="/pmkim/resources/js/jquery.js_analysis.js"></script>
     <script src="/pmkim/resources/js/jquery.superslides.min.js"></script>
     <script src="/pmkim/resources/js/bootstrap-select.js"></script>
     <script src="/pmkim/resources/js/inewsticker.js"></script>
-    <script src="/pmkim/resources/js/bootsnav.js."></script>
+    <script src="/pmkim/resources/js/bootsnav.js"></script>
     <script src="/pmkim/resources/js/images-loded.min.js"></script>
     <script src="/pmkim/resources/js/isotope.min.js"></script>
     <script src="/pmkim/resources/js/owl.carousel.min.js"></script>
